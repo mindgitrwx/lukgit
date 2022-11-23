@@ -1,0 +1,20 @@
+[package]
+name = "lukgit"
+version = "0.1.1"
+authors = ["jonghyeon yeo <jonghyeon.rw@gmail.com>"]
+edition = "2018"
+description = "A command line automation tool for github"
+license = "MIT"
+repository = "https://github.com/mindgitrwx/lukgit"
+homepage = "https://github.com/mindgitrwx/lukgit"
+
+[dependencies]
+surf = "2.3.2"
+urlencoding = "1.1.1"
+
+[dependencies.async-std]
+version = "1.6.5"
+features = ["attributes"]
+
+[profile.release]
+lto = true
