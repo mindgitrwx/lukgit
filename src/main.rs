@@ -25,24 +25,29 @@ USAGE:
     let query = urlencoding::encode(args.as_str());
 
     let url = format!("https://duckduckgo.com/?q={}&format=json", query);
+
     println!("url: {}",url);
+
     let response = surf::get(url.as_str()).await?;
-    let location = response
-        .header("location")
+    let gitURL = response
+        .header("gitURL")
         .map(|xs| xs.as_str().to_owned())
         .unwrap_or_else(Default::default);
-    println!("location: {:?}", location);
-    if location.is_empty() {
+    println!("gitURL: {:?}", gitURL);
+    if gitURL.is_empty() {
         async_std::task::sleep(Duration::from_millis(200)).await;
         std::io::stderr().write_all(b" No results.")?;
         std::process::exit(1);
     }
 
+    let mdurl = format!("{}/blob/master/README.md", gitURL);
+    println!("mdurl: {}",mdurl);
+
     // added for git clone
     // let command = Command::new("git")
     Command::new("git")
             .arg("clone")
-            .arg(location + &".git".to_owned())
+            .arg(gitURL + &".git".to_owned())
             .spawn()
             .expect("failed to execute process");
 
