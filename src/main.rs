@@ -11,11 +11,11 @@ async fn main() -> Result<(), surf::Error> {
     if args.len() == 1 {
         eprintln!(
             r#"
-cloneLucky! Clone your github directly on your terminal
+lukgit! Clone your github directly on your terminal
 
 USAGE:
-    cloneLucky tensorflow
-    cloneLucky rust based reverse proxy
+    lukgit tensorflow
+    lukgit rust based reverse proxy
 "#
         );
         std::process::exit(1);
