@@ -26,6 +26,8 @@ USAGE:
 
     let url = format!("https://duckduckgo.com/?q={}&format=json", query);
 
+    println!("url: {}",url);
+
     let response = surf::get(url.as_str()).await?;
     let git_URL = response
         .header("git_URL")
@@ -37,6 +39,10 @@ USAGE:
         std::io::stderr().write_all(b" No results.")?;
         std::process::exit(1);
     }
+
+    let mdurl = format!("{}/blob/master/README.md", git_URL);
+    println!("mdurl: {}",mdurl);
+   
 
     // added for git clone
     // let command = Command::new("git")
