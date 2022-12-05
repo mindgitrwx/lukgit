@@ -28,7 +28,7 @@ USAGE:
 
     println!("url: {}",url);
 
-    let response = surf::get(url.as_str()).await?;
+    let mut response = surf::get(url.as_str()).await?;
     let git_URL = response
         .header("location")
         .map(|xs| xs.as_str().to_owned())
@@ -40,17 +40,22 @@ USAGE:
         std::process::exit(1);
     }
 
-    let mdurl = format!("{}/blob/master/README.md", git_URL);
-    println!("mdurl: {}",mdurl);
-   
+    let mdurl = git_URL.replace("github.com", "raw.githubusercontent.com") + "/master/README.md";
+    response = surf::get(mdurl.as_str()).await?;
+    // get raw text from response
+    let mdtext = response.body_string().await?;
 
-    // added for git clone
-    // let command = Command::new("git")
     Command::new("git")
             .arg("clone")
             .arg(git_URL + &".git".to_owned())
             .spawn()
             .expect("failed to execute process");
+
+    // print markdown
+    Command::new("cat")
+        .arg(mdtext)
+        .spawn()
+        .expect("failed to execute process");
 
     Ok(())
 }
