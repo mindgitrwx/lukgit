@@ -30,7 +30,7 @@ USAGE:
 
     let response = surf::get(url.as_str()).await?;
     let git_URL = response
-        .header("git_URL")
+        .header("location")
         .map(|xs| xs.as_str().to_owned())
         .unwrap_or_else(Default::default);
     println!("git_URL: {:?}", git_URL);
