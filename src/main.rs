@@ -1,3 +1,11 @@
+#![allow(
+    clippy::cast_precision_loss,
+    clippy::cast_sign_loss,
+    clippy::match_same_arms,
+    clippy::cast_possible_wrap
+)]
+
+
 use std::io::Write;
 use std::time::Duration;
 use std::process::Command;
@@ -56,6 +64,7 @@ USAGE:
         .arg(mdtext)
         .spawn()
         .expect("failed to execute process");
+
 
     Ok(())
 }
