@@ -2,7 +2,7 @@
 name = "lukgit"
 version = "0.1.1"
 authors = ["jonghyeon yeo <jonghyeon.rw@gmail.com>"]
-edition = "2018"
+edition = "2022"
 description = "A command line automation tool for github"
 license = "MIT"
 repository = "https://github.com/mindgitrwx/lukgit"
