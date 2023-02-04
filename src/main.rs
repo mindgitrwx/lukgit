@@ -5,7 +5,6 @@
     clippy::cast_possible_wrap
 )]
 
-
 use std::io::Write;
 use std::time::Duration;
 use std::process::Command;
@@ -20,7 +19,6 @@ async fn main() -> Result<(), surf::Error> {
         eprintln!(
             r#"
 lukgit! Clone your github directly on your terminal
-
 USAGE:
     lukgit tensorflow
     lukgit rust based reverse proxy
@@ -37,25 +35,25 @@ USAGE:
     println!("url: {}",url);
 
     let mut response = surf::get(url.as_str()).await?;
-    let git_URL = response
+    let git_url = response
         .header("location")
         .map(|xs| xs.as_str().to_owned())
         .unwrap_or_else(Default::default);
-    println!("git_URL: {:?}", git_URL);
-    if git_URL.is_empty() {
+    println!("git_url: {:?}", git_url);
+    if git_url.is_empty() {
         async_std::task::sleep(Duration::from_millis(200)).await;
         std::io::stderr().write_all(b" No results.")?;
         std::process::exit(1);
     }
 
-    let mdurl = git_URL.replace("github.com", "raw.githubusercontent.com") + "/master/README.md";
+    let mdurl = git_url.replace("github.com", "raw.githubusercontent.com") + "/master/README.md";
     response = surf::get(mdurl.as_str()).await?;
     // get raw text from response
     let mdtext = response.body_string().await?;
 
     Command::new("git")
             .arg("clone")
-            .arg(git_URL + &".git".to_owned())
+            .arg(git_url + &".git".to_owned())
             .spawn()
             .expect("failed to execute process");
 
@@ -68,4 +66,3 @@ USAGE:
 
     Ok(())
 }
-
