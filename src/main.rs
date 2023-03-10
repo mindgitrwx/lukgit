@@ -55,13 +55,13 @@ USAGE:
             .arg("clone")
             .arg(git_url + &".git".to_owned())
             .spawn()
-            .expect("failed to execute process");
+            .expect("failed to execute git clone process");
 
     // print markdown
     Command::new("cat")
         .arg(mdtext)
         .spawn()
-        .expect("failed to execute process");
+        .expect("failed to execute markdown getting process");
 
 
     Ok(())
